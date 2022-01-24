@@ -75,7 +75,7 @@ public class Topic0708_Guru {
 		driver.findElement(By.xpath("//input[@name='telephoneno']")).sendKeys(cusPhone);
 		
 		Random randomGenerator = new Random();
-		int randomInt = randomGenerator.nextInt(3000);
+		int randomInt = randomGenerator.nextInt(9999);
 		cusEmail = "username" + randomInt + "@gmail.com";
 		driver.findElement(By.xpath("//input[@name='emailid']")).sendKeys(cusEmail);
 		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(cusPassWord);	
@@ -91,12 +91,14 @@ public class Topic0708_Guru {
 		Assert.assertEquals(cusPhone, driver.findElement(By.xpath("//tr[td='Mobile No.']/td/following-sibling::td")).getText());
 		Assert.assertEquals(cusEmail, driver.findElement(By.xpath("//tr[td='Email']/td/following-sibling::td")).getText());
 		getCusID = driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();	
-
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	@Test
 	public void TC02_EditCustomer() throws InterruptedException {		
 		//Case 02_Edit customer
 		System.out.println(getCusID);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Thread.sleep(2000);	
 		driver.findElement(By.xpath("//a[text()='Edit Customer']")).click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.findElement(By.xpath("//input[@name='cusid']")).sendKeys(getCusID);
@@ -119,12 +121,12 @@ public class Topic0708_Guru {
 		driver.findElement(By.xpath("//input[@name='emailid']")).sendKeys(cusEmail);
 		driver.findElement(By.xpath("//input[@name='sub']")).click();
 		driver.switchTo().alert().accept();
-		Thread.sleep(4000);
-		
+		Thread.sleep(2000);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		driver.findElement(By.xpath("//input[@name='cusid']")).sendKeys(getCusID);
 		driver.findElement(By.xpath("//input[@name='AccSubmit']")).click();		
-
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println(driver.findElement(By.xpath("//input[@name='city']")).getAttribute("value"));
 		System.out.println(driver.findElement(By.xpath("//input[@name='pinno']")).getAttribute("value"));
 		Assert.assertEquals(driver.findElement(By.xpath("//textarea[@name='addr']")).getText(), cusAddressEdit);
@@ -132,7 +134,6 @@ public class Topic0708_Guru {
 		Assert.assertEquals(driver.findElement(By.xpath("//input[@name='state']")).getAttribute("value"), cusStateEdit);
 		Assert.assertEquals(driver.findElement(By.xpath("//input[@name='pinno']")).getAttribute("value"), cusPinEdit);
 		Assert.assertEquals(driver.findElement(By.xpath("//input[@name='telephoneno']")).getAttribute("value"), cusPhoneEdit);	
-		Thread.sleep(2000);	
 		
 	}
 	
