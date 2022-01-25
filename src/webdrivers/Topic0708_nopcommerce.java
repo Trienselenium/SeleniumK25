@@ -25,6 +25,8 @@ public class Topic0708_nopcommerce {
 	String month ="May";
 	String year = "1980";
 	String cusEmail;
+	String passWord = "12345@Fra";
+	String repassWord = "12345@Fra";	
 	@BeforeTest
 	public void beforeTest() {
 		System.setProperty("webdriver.chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
@@ -59,6 +61,24 @@ public class Topic0708_nopcommerce {
 		int randomInt = randomGenerator.nextInt(9999);
 		cusEmail = "username" + randomInt + "@gmail.com";
 		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys(cusEmail);
+		
+		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys(passWord);
+		driver.findElement(By.xpath("//input[@id='ConfirmPassword']")).sendKeys(repassWord);
+		driver.findElement(By.xpath("//button[@id='register-button']")).click();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='result' and text()='Your registration completed']")).isDisplayed());
+		driver.findElement(By.xpath("//a[@class='ico-account']")).click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		dayDropDown = new Select(driver.findElement(By.xpath("//select[@name='DateOfBirthDay']")));
+		Assert.assertEquals(dayDropDown.getFirstSelectedOption().getText(),day);
+		
+		monthDropDown = new Select(driver.findElement(By.xpath("//select[@name='DateOfBirthMonth']")));
+		Assert.assertEquals(monthDropDown.getFirstSelectedOption().getText(),month);
+		
+		yearDropDown = new Select(driver.findElement(By.xpath("//select[@name='DateOfBirthYear']")));
+		Assert.assertEquals(yearDropDown.getFirstSelectedOption().getText(),year);
 	}
 
 
